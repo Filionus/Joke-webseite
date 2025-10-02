@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random IT Joke Generator</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1b2735, #090a0f);
+            color: #f5f7fa;
+        }
+
+        main {
+            background: rgba(15, 24, 42, 0.85);
+            padding: 2rem 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            max-width: 28rem;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.9rem;
+        }
+
+        #joke {
+            min-height: 4.5rem;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        button {
+            background-color: #00a8ff;
+            color: #051622;
+            border: none;
+            border-radius: 999px;
+            padding: 0.85rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover,
+        button:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 168, 255, 0.35);
+            outline: none;
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        @media (max-width: 480px) {
+            main {
+                margin: 1.5rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Random IT Joke Generator</h1>
+        <p id="joke">Press the button to get your first joke.</p>
+        <button id="jokeButton" type="button">Make me laugh</button>
+    </main>
+    <script>
+        const jokes = [
+            "Why do programmers prefer dark mode? Because light attracts bugs.",
+            "A SQL query walks into a bar, walks up to two tables and asks: 'Can I join you?'",
+            "There are 10 kinds of people in the world: those who understand binary and those who don't.",
+            "Why did the developer go broke? Because he used up all his cache.",
+            "How many programmers does it take to change a light bulb? None, that's a hardware problem.",
+            "I would tell you a UDP joke, but you might not get it.",
+            "Why was the JavaScript developer sad? Because he didn't Node how to Express himself.",
+            "What do you call a programmer from Finland? Nerdic.",
+            "What's a computer's favorite snack? Microchips.",
+            "A hardware engineer calls a programmer for help. Programmer says: 'It's a hardware problem.'",
+            "Why do Java developers wear glasses? Because they don't C#.",
+            "I changed my password to 'incorrect' so whenever I forget it, the computer reminds me: 'Your password is incorrect.'",
+            "Why was the computer cold? It forgot to close its Windows.",
+            "Debugging: being the detective in a crime movie where you are also the murderer.",
+            "Why do programmers hate nature? Too many bugs.",
+            "Knock knock. Race condition. Who's there?",
+            "In order to understand recursion, you must first understand recursion.",
+            "Why did the programmer quit her job? She didn't get arrays.",
+            "What's a programmer's favorite hangout place? The Foo Bar.",
+            "Why do Python developers wear glasses? Because they can't C.",
+            "Why do programmers always mix up Halloween and Christmas? Because Oct 31 equals Dec 25.",
+            "My computer beat me at chess, but it was no match for me at kickboxing.",
+            "Why was the smartphone wearing glasses? It lost its contacts.",
+            "I'm not anti-social; I'm just not user friendly.",
+            "Why did the computer show up at work late? It had a hard drive.",
+            "404: Joke not found.",
+            "A programmer's wife tells him: 'While you're at the store, buy a loaf of bread. If they have eggs, buy a dozen.' He comes back with 12 loaves of bread.",
+            "There are only two hard things in Computer Science: cache invalidation, naming things, and off-by-one errors.",
+            "Why was the computer tired when it got home? It had too many tabs open.",
+            "Why did the programmer go to therapy? He couldn't handle all his exceptions.",
+            "Why did the database administrator marry the table? Because it had a primary key to her heart.",
+            "Why did the developer bring a ladder to work? Because the sprint backlog was high-level.",
+            "Old programmers never die; they just go out of scope.",
+            "Why don't programmers play hide-and-seek? Because good luck hiding when they can `grep`.",
+            "Why did the server go broke? It lost all its cache in the cloud.",
+            "Why do DevOps engineers hate winter? Too many frozen pipelines.",
+            "Why was the UI designer always zen? She practiced flex-box breathing.",
+            "Why did the mobile developer get locked out of his house? He left his keys in the app store.",
+            "Why was the regex so grumpy? It couldn't find a match.",
+            "Why do security engineers take showers in the dark? They don't trust open windows.",
+            "Why was the git repository so self-conscious? It had a detached head.",
+            "Why did the programmer buy noise-cancelling headphones? To avoid unnecessary interrupts.",
+            "Why do database admins always win debates? They have strong arguments and foreign keys.",
+            "Why was the binary tree emotional? It had too many branches to process.",
+            "Why was the CPU at art class? It wanted to work on its core skills.",
+            "Why do programmers prefer mechanical keyboards? They like to keep things well-typed.",
+            "Why was the cloud stressed? Too much heavy lifting from users.",
+            "Why do AI engineers make great detectives? They always follow the neural clues.",
+            "Why do sysadmins prefer the night shift? Fewer users to break production.",
+            "Why did the Ethernet cable break up with Wi-Fi? Too many dropped connections.",
+            "Why was the exception so popular? Everyone tried to catch it.",
+            "Why did the laptop go to the spa? It needed a reboot.",
+            "Why was the neural network cold? It left its layers exposed.",
+            "Why do testers always carry a parachute? In case the product crashes.",
+            "Why did the programmer open a bakery? He was great at working with layers.",
+            "Why was the IT guy at the beach? He wanted to surf the web.",
+            "Why do programmers love hiking? They get to return true.",
+            "Why did the coder cross the road? To get to the other IDE.",
+            "Why was the database table shy? It didn't want to be joined.",
+            "Why do full-stack developers carry ladders? To reach the cloud.",
+            "Why did the API take a nap? It exceeded its rate limit.",
+            "Why was the backend developer relaxed? She had great REST.",
+            "Why was the laptop humming? It couldn't find the right key.",
+            "Why did the router go to therapy? Too many unresolved issues.",
+            "Why do software engineers carry whiteboards? In case they need to map things out.",
+            "Why did the junior dev bring string to standup? To tie up loose ends.",
+            "Why was the Scrum Master zen? She trusted the process.",
+            "Why did the developer study gardening? To understand branching.",
+            "Why do security analysts make good DJs? They love dropping the beat and locking it down.",
+            "Why was the smartwatch anxious? Its time was running out.",
+            "Why did the cloud developer love concerts? Because of the massive scale.",
+            "Why was the container ship delayed? Too many dockers on board.",
+            "Why do frontend developers hate camping? There's no CSS support.",
+            "Why did the keyboard break up with the mouse? Too much click bait.",
+            "Why was the patch nervous? It didn't want things to get out of hand.",
+            "Why do data scientists love parties? They always bring the best models.",
+            "Why was the commit message inspirational? It pushed everyone forward.",
+            "Why do IT auditors carry flashlights? They always look for hidden logs.",
+            "Why did the blockchain developer get promoted? She excelled at distributed leadership.",
+            "Why was the script late? It had too many dependencies.",
+            "Why do QA engineers love puns? They always test the limits.",
+            "Why did the firmware engineer break the ice? He liked working close to the metal.",
+            "Why was the smartwatch exhausted? It kept running in circles.",
+            "Why do sysadmins make good bakers? They know how to handle rolls.",
+            "Why did the incognito window feel lonely? No one could see it."
+        ];
+
+        const jokeElement = document.getElementById('joke');
+        const jokeButton = document.getElementById('jokeButton');
+
+        function pickRandomJoke() {
+            const index = Math.floor(Math.random() * jokes.length);
+            return jokes[index];
+        }
+
+        function showRandomJoke() {
+            jokeElement.textContent = pickRandomJoke();
+        }
+
+        jokeButton.addEventListener('click', showRandomJoke);
+        jokeButton.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                showRandomJoke();
+            }
+        });
+    </script>
+</body>
+</html>
